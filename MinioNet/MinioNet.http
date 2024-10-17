@@ -1,0 +1,6 @@
+@MinioNet_HostAddress = http://localhost:5187
+
+GET {{MinioNet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

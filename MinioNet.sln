@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinioNet", "MinioNet\MinioNet.csproj", "{43CF12CF-82A8-4CDE-B6DA-C5B86E1AC76A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinioUtility", "MinioUtility\MinioUtility.csproj", "{5ECCB167-24CE-4CB8-9CFB-494733661E6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43CF12CF-82A8-4CDE-B6DA-C5B86E1AC76A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43CF12CF-82A8-4CDE-B6DA-C5B86E1AC76A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43CF12CF-82A8-4CDE-B6DA-C5B86E1AC76A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43CF12CF-82A8-4CDE-B6DA-C5B86E1AC76A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ECCB167-24CE-4CB8-9CFB-494733661E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ECCB167-24CE-4CB8-9CFB-494733661E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ECCB167-24CE-4CB8-9CFB-494733661E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ECCB167-24CE-4CB8-9CFB-494733661E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87E8E5F9-8E32-49C3-9339-BB97C5265279}
+	EndGlobalSection
+EndGlobal
