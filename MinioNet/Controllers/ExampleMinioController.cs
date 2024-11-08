@@ -139,5 +139,20 @@ namespace MinioNet.Controllers
             }
         }
 
+        
+        [HttpGet("DeleteFile")]
+        public async Task<IActionResult> DeleteFileInMinio()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
+
+            var endpoint = Environment.GetEnvironmentVariable("MINIO_ENDPOINT");
+            var accessKey = Environment.GetEnvironmentVariable("MINIO_ACCESSKEY");
+            var secretKey = Environment.GetEnvironmentVariable("MINIO_SCRETKEY");
+            IMinioClient minio = new MinioClient()
+                                    .WithEndpoint(endpoint)
+            .WithCredentials(accessKey, secretKey)
+                                    .WithSSL(false)
+                                    .Build();
+        }
     }
 }
