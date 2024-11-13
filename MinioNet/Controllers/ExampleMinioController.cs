@@ -1,9 +1,11 @@
 ﻿
 
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
+using System;
 using System.Net;
 using System.Security.AccessControl;
 
@@ -153,6 +155,26 @@ namespace MinioNet.Controllers
             .WithCredentials(accessKey, secretKey)
                                     .WithSSL(false)
                                     .Build();
+            string bucketName = "target-version";
+            string objectName = "HCE/MATS.txt";
+
+            try
+            {
+                var args = new RemoveObjectArgs()
+                     .WithBucket(bucketName)
+                     .WithObject(objectName);
+              
+
+                Console.WriteLine("Running example for API: RemoveObjectAsync");
+                await minio.RemoveObjectAsync(args).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return NoContent();
         }
     }
 }
