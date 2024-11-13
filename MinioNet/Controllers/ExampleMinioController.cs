@@ -1,13 +1,8 @@
-﻿
-
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
-using System;
 using System.Net;
-using System.Security.AccessControl;
 
 namespace MinioNet.Controllers
 {
@@ -46,7 +41,7 @@ namespace MinioNet.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFileToMinio(IFormFile file)
+        public async Task<IActionResult> UploadFileToMinio( IFormFile file)
         {
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;

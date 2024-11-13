@@ -1,30 +1,35 @@
+﻿using Microsoft.OpenApi.Models;
 using Minio;
+using MinioNet.Config;
+using MinioNet.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+#region setting Minio
+var minioConfig = new MinioConfiguration
+{
+    Endpoint = Environment.GetEnvironmentVariable("MINIO_ENDPOINT"),
+    AccessKey = Environment.GetEnvironmentVariable("MINIO_ACCESSKEY"),
+    SecretKey = Environment.GetEnvironmentVariable("MINIO_SECRETKEY"),
+};
+
+builder.Services.AddSingleton(minioConfig);
+builder.Services.AddSingleton<MinioService>();
+#endregion
 // Add services to the container.
 
-
-
+builder.Services.AddLogging();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-#region setting Io
-var minioEndPoint = Environment.GetEnvironmentVariable("MINIO_ENDPOINT");
-var minioAccessKey = Environment.GetEnvironmentVariable("MINIO_ACCESSKEY");
-var minioScretKey = Environment.GetEnvironmentVariable("MINIO_SCRETKEY");
-
-
-// Add Minio using the custom endpoint and configure additional settings for default MinioClient initialization
-builder.Services.AddMinio(configureClient => configureClient
-    .WithEndpoint(minioEndPoint)
-    .WithCredentials(minioAccessKey, minioScretKey)
-.Build());
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+    c.OperationFilter<FileUploadOperation>(); // Áp dụng bộ lọc cho file upload
+});
 
 
-#endregion
 
 
 

@@ -64,7 +64,7 @@ namespace MinioUtility
         /// <param name="filePath"></param>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        public static async Task UploadFileAsync(string objectName, string filePath, string contentType , string Folder = "FileUpload")
+        public static async Task UploadFileAsync(string objectName, string filePath, string contentType, string Folder = "FileUpload")
         {
             try
             {
@@ -84,23 +84,61 @@ namespace MinioUtility
             }
         }
 
-        public static async Task DownloadFile(string fileNameDB = "my-object-name")
+        /// <summary>
+        /// Download file from Minio
+        /// </summary>
+        /// <param name="fileNameDB"></param>
+        /// <returns></returns>
+        public static async Task<MemoryStream> DownloadFile(string fileNameDB)
         {
-            StatObjectArgs statObjectArgs = new StatObjectArgs().WithBucket(_bucketName).WithObject(fileNameDB);
-            await _minioClient.StatObjectAsync(statObjectArgs).ConfigureAwait(false);
+            var memoryStream = new MemoryStream();
 
-            var args = new GetObjectArgs()
-              .WithBucket(_bucketName)
-            .WithObject(fileNameDB)
-            .WithCallbackStream((stream) =>
-            {
-                stream.CopyTo(Console.OpenStandardOutput());
-            }); ;
-
-            await _minioClient.GetObjectAsync(args).ConfigureAwait(false);
-            Console.WriteLine($"Downloaded the file {fileNameDB} from bucket {_bucketName}");
+            // Get input stream to have content of 'my-objectname' from 'my-bucketname'
+            GetObjectArgs getObjectArgs = new GetObjectArgs()
+                                              .WithBucket(_bucketName)
+                                              .WithObject(fileNameDB)
+                                              .WithCallbackStream((stream) =>
+                                              {
+                                                  stream.CopyTo(memoryStream);
+                                              });
+            await _minioClient.GetObjectAsync(getObjectArgs);
+            memoryStream.Position = 0;
+            return memoryStream;
         }
+
+        /// <summary>
+        /// Remove file (object) in minio
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static async Task RemoveFile(string fileName)
+        {
+            try
+            {
+                // If the object is not found, statObjectAsync() throws an exception,
+                StatObjectArgs statObjectArgs = new StatObjectArgs()
+                                .WithBucket(_bucketName)
+                                .WithObject(fileName);
+                await _minioClient.StatObjectAsync(statObjectArgs);
+
+                var args = new RemoveObjectArgs()
+                     .WithBucket(_bucketName)
+                     .WithObject(fileName);
+
+
+                Console.WriteLine("Running example for API: RemoveObjectAsync");
+                await _minioClient.RemoveObjectAsync(args).ConfigureAwait(false);
+            }
+            catch (MinioException ex)
+            {
+                Console.WriteLine("Error occurred: " + ex);
+            }
+
+
+        }
+
     }
+
 
 
 }

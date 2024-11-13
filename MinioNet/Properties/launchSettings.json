@@ -28,7 +28,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MINIO_ENDPOINT": "10.10.53.53:9000",
         "MINIO_ACCESSKEY": "ygB1clbJmm06duncSX24",
-        "MINIO_SCRETKEY": "gEYnmgcNOKgT5GbW14R26ROu8dyr4HGrXUsI8Oku"
+        "MINIO_SECRETKEY": "gEYnmgcNOKgT5GbW14R26ROu8dyr4HGrXUsI8Oku"
       }
     },
     "Container (Dockerfile)": {
