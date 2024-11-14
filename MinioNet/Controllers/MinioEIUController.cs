@@ -19,7 +19,7 @@ namespace MinioNet.Controllers
         public async Task<IActionResult> UploadFile([FromForm] UploadFileParms parms)
         {
             var file = parms.File;
-            string bucketName = parms.BucketName, folder = parms.Folder ?? "";
+            string bucketName = parms.BucketName;
             if (string.IsNullOrWhiteSpace(bucketName))
             {
                 return BadRequest("Bucket name cannot be empty.");
@@ -32,7 +32,7 @@ namespace MinioNet.Controllers
 
             try
             {
-                await _minioService.UploadFileAsync(bucketName, file, folder);
+                await _minioService.UploadFileAsync(bucketName, file, parms.PathFile);
                 return Ok($"File '{file.FileName}' uploaded successfully to bucket '{bucketName}'.");
             }
             catch (Exception ex)
@@ -42,18 +42,18 @@ namespace MinioNet.Controllers
             }
         }
 
-        [HttpGet("download/{bucketName}/{objectName}")]
-        public async Task<IActionResult> DownloadFile(string bucketName, string objectName, string folder = "")
+        [HttpGet("download/{bucketName}")]
+        public async Task<IActionResult> DownloadFile(string bucketName, string pathFile)
         {
-            var memoryStream = await _minioService.DownloadFileAsync(bucketName, objectName, folder);
-            return File(memoryStream, "application/octet-stream", objectName);
+            var memoryStream = await _minioService.DownloadFileAsync(bucketName, pathFile);
+            return File(memoryStream, "application/octet-stream", pathFile);
         }
 
         [HttpDelete("delete/{bucketName}/{objectName}")]
-        public async Task<IActionResult> DeleteFile(string bucketName, string objectName,string folder="")
+        public async Task<IActionResult> DeleteFile(string bucketName, string pathFile)
         {
-            await _minioService.DeleteFileAsync(bucketName, objectName,folder);
-            return Ok($"File '{objectName}' deleted successfully from bucket '{bucketName}'.");
+            await _minioService.DeleteFileAsync(bucketName,pathFile);
+            return Ok($"File '{pathFile}' deleted successfully from bucket '{bucketName}'.");
         }
     }
 }

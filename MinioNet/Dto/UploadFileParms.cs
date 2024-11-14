@@ -6,6 +6,8 @@
         
         public string BucketName { get; set; }
 
-        public string? Folder {  get; set; }
+        //public string? Folder {  get; set; }
+
+        public string PathFile { get; set; }
     }
 }

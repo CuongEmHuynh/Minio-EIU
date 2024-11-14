@@ -61,14 +61,14 @@ namespace MinioNet.Services
         /// <param name="filePath"></param>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        public async Task UploadFileAsync(string bucketName, IFormFile file, string folder)
+        public async Task UploadFileAsync(string bucketName, IFormFile file, string pathFile)
         {
             if (file == null || file.Length == 0)
             {
                 throw new ArgumentException("File is empty or null.");
             }
 
-            string objectName = string.IsNullOrEmpty(folder) ? file.FileName : $"{folder}/{file.FileName}";
+            //string objectName = string.IsNullOrEmpty(folder) ? file.FileName : $"{folder}/{file.FileName}";
             var fileUpload = file.OpenReadStream();
 
             try
@@ -86,32 +86,17 @@ namespace MinioNet.Services
                 // Upload a file to bucket.
                 var putObjectArgs = new PutObjectArgs()
                     .WithBucket(bucketName)
-                    .WithObject(objectName)
+                    .WithObject(pathFile)
                     .WithStreamData(fileUpload).WithObjectSize(fileUpload.Length);
 
                 await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
 
-                Console.WriteLine("Successfully uploaded " + objectName);
+                Console.WriteLine("Successfully uploaded " + pathFile);
             }
             catch (MinioException e)
             {
                 Console.WriteLine("File Upload Error: {0}", e.Message);
             }
-
-            //using (var memoryStream = new MemoryStream())
-            //{
-            //    await file.CopyToAsync(memoryStream);
-            //    memoryStream.Position = 0;
-
-            //    var putObjectArgs = new PutObjectArgs()
-            //                            .WithBucket(bucketName)
-            //                            .WithObject(objectName)
-            //                            .WithStreamData(memoryStream)
-            //                            .WithObjectSize(memoryStream.Length);
-
-            //    await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
-            //    _logger.LogInformation($"Successfully uploaded '{objectName}' to bucket '{bucketName}'.");
-            //}
         }
 
         /// <summary>
@@ -120,24 +105,24 @@ namespace MinioNet.Services
         /// <param name="bucketName"></param>
         /// <param name="objectName"></param>
         /// <returns></returns>
-        public async Task<MemoryStream> DownloadFileAsync(string bucketName, string objectName,string folder)
+        public async Task<MemoryStream> DownloadFileAsync(string bucketName, string pathFile)
         {
             var memoryStream = new MemoryStream();
-            objectName = string.IsNullOrEmpty(folder) ? objectName : $"{folder}/{objectName}";
+            //objectName = string.IsNullOrEmpty(folder) ? objectName : $"{folder}/{objectName}";
             try
             {
                 var getObjectArgs = new GetObjectArgs()
                                         .WithBucket(bucketName)
-                                        .WithObject(objectName)
+                                        .WithObject(pathFile)
                                         .WithCallbackStream(stream => stream.CopyTo(memoryStream));
 
                 await _minioClient.GetObjectAsync(getObjectArgs);
                 memoryStream.Position = 0;
-                _logger.LogInformation($"Successfully downloaded '{objectName}' from bucket '{bucketName}'.");
+                _logger.LogInformation($"Successfully downloaded '{pathFile}' from bucket '{bucketName}'.");
             }
             catch (MinioException ex)
             {
-                _logger.LogError(ex, $"Error downloading file '{objectName}' from bucket '{bucketName}': {ex.Message}");
+                _logger.LogError(ex, $"Error downloading file '{pathFile}' from bucket '{bucketName}': {ex.Message}");
                 throw;
             }
 
@@ -150,21 +135,21 @@ namespace MinioNet.Services
         /// <param name="bucketName"></param>
         /// <param name="objectName"></param>
         /// <returns></returns>
-        public async Task DeleteFileAsync(string bucketName, string objectName, string folder = "")
+        public async Task DeleteFileAsync(string bucketName,string pathFile)
         {
             try
             {
-                objectName = string.IsNullOrEmpty(folder) ? objectName : $"{folder}/{objectName}";
+                //objectName = string.IsNullOrEmpty(folder) ? objectName : $"{folder}/{objectName}";
                 var removeObjectArgs = new RemoveObjectArgs()
                                           .WithBucket(bucketName)
-                                          .WithObject(objectName);
+                                          .WithObject(pathFile);
 
                 await _minioClient.RemoveObjectAsync(removeObjectArgs).ConfigureAwait(false);
-                _logger.LogInformation($"Successfully deleted '{objectName}' from bucket '{bucketName}'.");
+                _logger.LogInformation($"Successfully deleted '{pathFile}' from bucket '{bucketName}'.");
             }
             catch (MinioException ex)
             {
-                _logger.LogError(ex, $"Error deleting file '{objectName}' from bucket '{bucketName}': {ex.Message}");
+                _logger.LogError(ex, $"Error deleting file '{pathFile}' from bucket '{bucketName}': {ex.Message}");
                 throw;
             }
         }
