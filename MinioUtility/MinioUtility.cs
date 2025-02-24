@@ -1,17 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Minio;
+﻿using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
-using Minio.Helper;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Intrinsics.X86;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace MinioUtility
 {
