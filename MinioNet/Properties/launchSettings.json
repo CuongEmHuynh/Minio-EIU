@@ -5,7 +5,10 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MINIO_ENDPOINT": "222.255.214.30:9000",
+        "MINIO_ACCESSKEY": "uploader",
+        "MINIO_SECRETKEY": "uploader123"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5187"
@@ -15,7 +18,10 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MINIO_ENDPOINT": "222.255.214.30:9000",
+        "MINIO_ACCESSKEY": "uploader",
+        "MINIO_SECRETKEY": "uploader123"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7051;http://localhost:5187"
@@ -26,9 +32,9 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MINIO_ENDPOINT": "10.10.53.53:9000",
-        "MINIO_ACCESSKEY": "ygB1clbJmm06duncSX24",
-        "MINIO_SECRETKEY": "gEYnmgcNOKgT5GbW14R26ROu8dyr4HGrXUsI8Oku"
+        "MINIO_ENDPOINT": "222.255.214.30:9000",
+        "MINIO_ACCESSKEY": "uploader",
+        "MINIO_SECRETKEY": "uploader123"
       }
     },
     "Container (Dockerfile)": {
