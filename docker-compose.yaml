@@ -1,0 +1,20 @@
+#NETWORK
+networks:
+  web-net:
+    external: true
+services:
+  #WEBAPP
+  minio-eiu:
+    hostname: minio-eiu
+    image: huynhcuongem75/minio-eiu:v1.0
+    build:
+      context: ./
+      dockerfile: ./MinioNet/Dockerfile
+    environment:
+      MINIO_ENDPOINT: 222.255.214.30:9000
+      MINIO_ACCESSKEY: uploader
+      MINIO_SECRETKEY: uploader123
+      TZ: Asia/Ho_Chi_Minh
+    restart: always
+    networks:
+      - web-net

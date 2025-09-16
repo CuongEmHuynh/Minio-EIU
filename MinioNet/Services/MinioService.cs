@@ -70,6 +70,7 @@ namespace MinioNet.Services
 
             //string objectName = string.IsNullOrEmpty(folder) ? file.FileName : $"{folder}/{file.FileName}";
             var fileUpload = file.OpenReadStream();
+            var fileContentTpe = file.ContentType;
 
             try
             {
@@ -87,6 +88,7 @@ namespace MinioNet.Services
                 var putObjectArgs = new PutObjectArgs()
                     .WithBucket(bucketName)
                     .WithObject(pathFile)
+                    .WithContentType(fileContentTpe ?? "application/octet-stream")
                     .WithStreamData(fileUpload).WithObjectSize(fileUpload.Length);
 
                 await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
@@ -135,7 +137,7 @@ namespace MinioNet.Services
         /// <param name="bucketName"></param>
         /// <param name="objectName"></param>
         /// <returns></returns>
-        public async Task DeleteFileAsync(string bucketName,string pathFile)
+        public async Task DeleteFileAsync(string bucketName, string pathFile)
         {
             try
             {
