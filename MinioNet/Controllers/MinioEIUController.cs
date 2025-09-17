@@ -4,7 +4,7 @@ using MinioNet.Services;
 
 namespace MinioNet.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class MinioEIUController : ControllerBase
     {
