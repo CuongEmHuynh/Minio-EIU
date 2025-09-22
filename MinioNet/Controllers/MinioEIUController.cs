@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MinioNet.Dto;
 using MinioNet.Services;
+using System.Security;
 
 namespace MinioNet.Controllers
 {
@@ -43,13 +44,13 @@ namespace MinioNet.Controllers
         }
 
         [HttpGet("download/{bucketName}")]
-        public async Task<IActionResult> DownloadFile(string bucketName, string pathFile)
+        public async Task<IActionResult> DownloadFile(string bucketName, string pathFile, string fileName)
         {
             var memoryStream = await _minioService.DownloadFileAsync(bucketName, pathFile);
-            return File(memoryStream, "application/octet-stream", pathFile);
+            return File(memoryStream, "application/octet-stream", fileName);
         }
 
-        [HttpDelete("delete/{bucketName}/{objectName}")]
+        [HttpDelete("delete/{bucketName}")]
         public async Task<IActionResult> DeleteFile(string bucketName, string pathFile)
         {
             await _minioService.DeleteFileAsync(bucketName,pathFile);
