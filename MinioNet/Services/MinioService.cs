@@ -156,6 +156,13 @@ namespace MinioNet.Services
             }
         }
 
+        /// <summary>
+        /// Return url view file
+        /// </summary>
+        /// <param name="bucketName"></param>
+        /// <param name="pathFile"></param>
+        /// <param name="expiresInSeconds"></param>
+        /// <returns></returns>
         public async Task<string> GetFileViewUrlAsync(string bucketName, string pathFile, int expiresInSeconds = 60 * 60)
         {
             try
