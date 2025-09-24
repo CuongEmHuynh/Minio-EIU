@@ -155,5 +155,24 @@ namespace MinioNet.Services
                 throw;
             }
         }
+
+        public async Task<string> GetFileViewUrlAsync(string bucketName, string pathFile, int expiresInSeconds = 60 * 60)
+        {
+            try
+            {
+                var presignedGetObjectArgs = new PresignedGetObjectArgs()
+                    .WithBucket(bucketName)
+                    .WithObject(pathFile)
+                    .WithExpiry(expiresInSeconds);
+                string url = await _minioClient.PresignedGetObjectAsync(presignedGetObjectArgs).ConfigureAwait(false);
+                _logger.LogInformation($"Successfully generated pre-signed URL for '{pathFile}' in bucket '{bucketName}'.");
+                return url;
+            }
+            catch (MinioException ex)
+            {
+                _logger.LogError(ex, $"Error generating pre-signed URL for file '{pathFile}' in bucket '{bucketName}': {ex.Message}");
+                throw;
+            }
+        }
     }
 }

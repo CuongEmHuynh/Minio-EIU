@@ -56,5 +56,13 @@ namespace MinioNet.Controllers
             await _minioService.DeleteFileAsync(bucketName,pathFile);
             return Ok($"File '{pathFile}' deleted successfully from bucket '{bucketName}'.");
         }
+
+        [HttpGet("view-file")]
+        public async Task<IActionResult> GetFileViewUrl(string bucketName,string pathFile)
+        {
+            string url = await _minioService.GetFileViewUrlAsync(bucketName, pathFile);
+            return Ok(new { Url = url });
+
+        }
     }
 }
