@@ -12,6 +12,7 @@ var minioConfig = new MinioConfiguration
     Endpoint = Environment.GetEnvironmentVariable("MINIO_ENDPOINT"),
     AccessKey = Environment.GetEnvironmentVariable("MINIO_ACCESSKEY"),
     SecretKey = Environment.GetEnvironmentVariable("MINIO_SECRETKEY"),
+    UseSSL =  bool.Parse(Environment.GetEnvironmentVariable("MINIO_USESSL"))
 };
 
 builder.Services.AddSingleton(minioConfig);

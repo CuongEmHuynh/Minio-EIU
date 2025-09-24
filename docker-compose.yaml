@@ -6,7 +6,7 @@ services:
   #WEBAPP
   minio-eiu:
     hostname: minio-eiu
-    image: huynhcuongem75/minio-eiu:v1.0
+    image: huynhcuongem75/minio-eiu:v1.1
     build:
       context: ./
       dockerfile: ./MinioNet/Dockerfile

@@ -18,7 +18,7 @@ namespace MinioNet.Services
             _minioClient = new MinioClient()
                                 .WithEndpoint(config.Endpoint)
                                 .WithCredentials(config.AccessKey, config.SecretKey)
-                                .WithSSL(false)
+                                .WithSSL(config.UseSSL)
                                 .Build();
             _logger = logger;
         }
